@@ -5,14 +5,17 @@
     "build": "next build; next export",
     "deploy": "cp -R .now out/ && now out",
     "ios": "expo start --ios",
+    "postinstall": "./bin/postinstall.sh",
     "test": "jest",
     "web": "next dev"
   },
   "dependencies": {
+    "@react-native-community/slider": "^2.0.9",
     "expo": "~37.0.3",
     "expo-updates": "~0.1.0",
     "next": "^9.3.6",
     "prism-react-renderer": "^1.1.0",
+    "rc-slider": "^9.2.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-live": "^2.2.2",

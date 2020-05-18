@@ -4,6 +4,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, ScrollView
 import { isWeb, styleForPlatform } from '../utils/platform';
 
 import GramInput from '../components/GramInput';
+import Slider from '../components/Slider';
 
 const TOTAL_FLOUR = 'Total flour';
 const WHOLE_WHEAT = 'Whole wheat';
@@ -74,8 +75,9 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {bakerRatio.map(({ title, percent, gram }) => (
-          <GramInput title={title} percentValue={percent} gramValue={gram} />
+          <GramInput key={title} title={title} percentValue={percent} gramValue={gram} />
         ))}
+        <Slider defaultValue={300} />
       </ScrollView>
     </SafeAreaView>
   );

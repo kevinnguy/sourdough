@@ -1,17 +1,21 @@
 {
   "main": "index.js",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "web": "expo start --web",
-    "start": "react-native start",
-    "test": "jest"
+    "android": "expo start --android",
+    "build": "next build; next export",
+    "deploy": "cp -R .now out/ && now out",
+    "ios": "expo start --ios",
+    "test": "jest",
+    "web": "next dev"
   },
   "dependencies": {
     "expo": "~37.0.3",
-    "expo-updates": "~0.2.0",
+    "expo-updates": "~0.1.0",
+    "next": "^9.3.6",
+    "prism-react-renderer": "^1.1.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
+    "react-live": "^2.2.2",
     "react-native": "~0.61.5",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-reanimated": "~1.7.0",
@@ -21,10 +25,13 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@expo/next-adapter": "^2.1.4-alpha.0",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.23",
     "babel-preset-expo": "~8.1.0",
     "jest-expo": "~37.0.0",
+    "next-compose-plugins": "^2.2.0",
+    "now": "^18.0.0",
     "typescript": "~3.8.3"
   },
   "jest": {

@@ -1,0 +1,17 @@
+{
+  "name": "sourdough",
+  "displayName": "sourdough",
+  "expo": {
+    "name": "sourdough",
+    "slug": "sourdough",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

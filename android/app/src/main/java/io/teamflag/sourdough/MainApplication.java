@@ -1,4 +1,4 @@
-package com.sourdough;
+package io.teamflag.sourdough;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,7 +10,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.sourdough.generated.BasePackageList;
+import io.teamflag.sourdough.generated.BasePackageList;
 
 import org.unimodules.adapters.react.ReactAdapterPackage;
 import org.unimodules.adapters.react.ModuleRegistryAdapter;

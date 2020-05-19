@@ -1,33 +1,34 @@
 {
-  "main": "index.js",
   "scripts": {
-    "android": "expo start --android",
+    "android": "react-native run-android",
     "build": "next build; next export",
     "deploy": "cp -R .now out/ && now out",
-    "ios": "expo start --ios",
+    "ios": "react-native run-ios",
     "postinstall": "./bin/postinstall.sh",
     "test": "jest",
-    "web": "next dev"
+    "web": "next dev",
+    "start": "react-native start"
   },
   "dependencies": {
-    "@react-native-community/slider": "^2.0.9",
     "expo": "~37.0.3",
+    "expo-splash-screen": "^0.2.3",
     "expo-updates": "~0.1.0",
     "next": "^9.3.6",
-    "prism-react-renderer": "^1.1.0",
-    "rc-slider": "^9.2.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
-    "react-live": "^2.2.2",
     "react-native": "~0.61.5",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-reanimated": "~1.7.0",
     "react-native-screens": "~2.2.0",
+    "react-native-slider": "^0.11.0",
     "react-native-unimodules": "~0.9.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "babel-jest": "~25.2.6",
+    "jest": "~25.2.6",
+    "react-test-renderer": "~16.9.0",
     "@expo/next-adapter": "^2.1.4-alpha.0",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.23",

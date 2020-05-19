@@ -12,6 +12,13 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "io.teamflag.sourdough"
+    },
+    "android": {
+      "package": "io.teamflag.sourdough"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

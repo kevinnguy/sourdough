@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputContainer: {
-    marginTop: 4,
+    paddingTop: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start'

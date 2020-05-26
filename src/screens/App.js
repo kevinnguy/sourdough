@@ -101,8 +101,10 @@ export default function App() {
       totalValueGram = 0;
     }
 
+    totalValueGram = Number(totalValueGram);
     setTotalFlour({ ...totalFlour, gram: totalValueGram });
-    const bakerRatio = getBakerRatio(getIngredients());
+    const ingredients = getIngredients();
+    const bakerRatio = getBakerRatio(ingredients);
 
     setWholeWheat(bakerRatio[wholeWheat.id]);
     setWater(bakerRatio[water.id]);

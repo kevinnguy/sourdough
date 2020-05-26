@@ -1,6 +1,11 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import useAppState from 'react-native-appstate-hook';
 
 import GramInput from '../components/GramInput';
@@ -148,39 +153,44 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <GramInput
-          editablePercent={false}
-          title={totalFlour.id}
-          percentValue={totalFlour.percent}
-          gramValue={totalFlour.gram}
-          onChange={onChangeTotalFlour}
-        />
-        <GramInput
-          title={wholeWheat.id}
-          percentValue={wholeWheat.percent}
-          gramValue={wholeWheat.gram}
-          onChange={onChangeIngredient}
-        />
-        <GramInput
-          title={water.id}
-          percentValue={water.percent}
-          gramValue={water.gram}
-          onChange={onChangeIngredient}
-        />
-        <GramInput
-          title={starter.id}
-          percentValue={starter.percent}
-          gramValue={starter.gram}
-          onChange={onChangeIngredient}
-        />
-        <GramInput
-          title={salt.id}
-          percentValue={salt.percent}
-          gramValue={salt.gram}
-          onChange={onChangeIngredient}
-        />
-      </ScrollView>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={'padding'}
+        keyboardVerticalOffset={20}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <GramInput
+            editablePercent={false}
+            title={totalFlour.id}
+            percentValue={totalFlour.percent}
+            gramValue={totalFlour.gram}
+            onChange={onChangeTotalFlour}
+          />
+          <GramInput
+            title={wholeWheat.id}
+            percentValue={wholeWheat.percent}
+            gramValue={wholeWheat.gram}
+            onChange={onChangeIngredient}
+          />
+          <GramInput
+            title={water.id}
+            percentValue={water.percent}
+            gramValue={water.gram}
+            onChange={onChangeIngredient}
+          />
+          <GramInput
+            title={starter.id}
+            percentValue={starter.percent}
+            gramValue={starter.gram}
+            onChange={onChangeIngredient}
+          />
+          <GramInput
+            title={salt.id}
+            percentValue={salt.percent}
+            gramValue={salt.gram}
+            onChange={onChangeIngredient}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
       <Slider
         style={styles.slider}
         defaultValue={300}
@@ -193,7 +203,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     marginTop: isWeb ? 40 : 30,
     ...styleForPlatform({
       mobile: {
@@ -204,8 +213,11 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  slider: {
+  flex: {
     flex: 1,
+  },
+  slider: {
+    // flex: 1,
     marginVertical: 20,
   },
 });

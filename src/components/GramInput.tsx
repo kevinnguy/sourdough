@@ -20,15 +20,17 @@ export default function GramInput({
       <Text style={styles.title}>{title}</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          editable={editablePercent}
-          style={[styles.inputText, styles.subtitle]}
           defaultValue={`${percentValue}%`}
+          editable={editablePercent}
+          keyboardType={'number-pad'}
           onChangeText={(text) => onChange(text, 'percent', title)}
+          style={[styles.inputText, styles.subtitle]}
         />
         <TextInput
-          style={[styles.inputText, styles.subtitle]}
           defaultValue={`${gramValue}`}
+          keyboardType={'number-pad'}
           onChangeText={(text) => onChange(text, 'gram', title)}
+          style={[styles.inputText, styles.subtitle]}
         />
         {/* <View style={styles.inputButtons}>
           <TouchableOpacity>
@@ -68,5 +70,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 30,
     fontWeight: '300',
+    color: 'black'
   },
 });

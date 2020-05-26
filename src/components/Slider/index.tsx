@@ -1,8 +1,7 @@
 import React from 'react';
-// import Slider from '@react-native-community/slider';
 import Slider from 'react-native-slider';
 
-export default function CustomSlider({ defaultValue = 0, maximumValue = 1000 }) {
+export default function CustomSlider({ defaultValue = 0, maximumValue = 1000, onChange }) {
   return (
     <Slider
       // style={{height: 40}}
@@ -10,6 +9,8 @@ export default function CustomSlider({ defaultValue = 0, maximumValue = 1000 }) 
       maximumValue={maximumValue}
       minimumTrackTintColor="#000000"
       maximumTrackTintColor="#888"
+      onValueChange={onChange}
+      step={10}
       value={defaultValue}
     />
   )

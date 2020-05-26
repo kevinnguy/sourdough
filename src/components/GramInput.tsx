@@ -1,13 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  SafeAreaView,
+  View,
+} from 'react-native';
 
-export default function GramInput({ title = 'Ingredient', percentValue = 0, gramValue = 0 }) {
+export default function GramInput({
+  title = 'Ingredient',
+  percentValue = 0,
+  gramValue = 0,
+  editablePercent = true,
+  onChange,
+}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.inputContainer}>
-        <TextInput style={[styles.inputText, styles.subtitle]} defaultValue={`${percentValue}%`} />
-        <TextInput style={[styles.inputText, styles.subtitle]} defaultValue={`${gramValue}g`} />
+        <TextInput
+          editable={editablePercent}
+          style={[styles.inputText, styles.subtitle]}
+          defaultValue={`${percentValue}%`}
+          onChangeText={(text) => onChange(text, 'percent', title)}
+        />
+        <TextInput
+          style={[styles.inputText, styles.subtitle]}
+          defaultValue={`${gramValue}`}
+          onChangeText={(text) => onChange(text, 'gram', title)}
+        />
         {/* <View style={styles.inputButtons}>
           <TouchableOpacity>
             <Text style={styles.subtitle}>{`-`}</Text>
@@ -19,7 +41,7 @@ export default function GramInput({ title = 'Ingredient', percentValue = 0, gram
         </View> */}
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -30,21 +52,21 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   inputText: {
     // width: 100,
     // backgroundColor: 'gray'
   },
   inputButtons: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   title: {
     fontSize: 30,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   subtitle: {
     fontSize: 30,
-    fontWeight: '300'
-  }
+    fontWeight: '300',
+  },
 });

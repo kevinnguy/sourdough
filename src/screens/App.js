@@ -193,7 +193,7 @@ export default function App() {
       </KeyboardAvoidingView>
       <Slider
         style={styles.slider}
-        defaultValue={300}
+        defaultValue={totalFlour.gram}
         onChange={onChangeTotalFlour}
       />
     </SafeAreaView>
@@ -217,7 +217,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slider: {
-    // flex: 1,
     marginVertical: 20,
   },
 });

@@ -62,6 +62,8 @@ export default function App() {
       AsyncStorage.getItem(STORAGE_KEY)
         .then((jsonString) => {
           ingredients = JSON.parse(jsonString);
+          if (!ingredients) return;
+
           console.warn('setting state from storage', ingredients);
           setTotalFlour(ingredients[TOTAL_FLOUR]);
           setWholeWheat(ingredients[WHOLE_WHEAT]);
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: isWeb ? 40 : 60,
+    marginTop: isWeb ? 40 : 30,
     ...styleForPlatform({
       mobile: {
         marginHorizontal: 20,

@@ -1,54 +1,25 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  View,
-} from 'react-native';
-
-import { isWeb, styleForPlatform } from '../utils/platform';
+import AsyncStorage from '@react-native-community/async-storage';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import useAppState from 'react-native-appstate-hook';
 
 import GramInput from '../components/GramInput';
 import Slider from '../components/Slider';
 
-const TOTAL_FLOUR = 'Total flour';
+import getBakerRatio, {
+  TOTAL_FLOUR,
+  getGramFromPercent,
+  getPercentFromGram,
+} from '../utils/bakerRatio';
+import { isWeb, styleForPlatform } from '../utils/platform';
+
+const STORAGE_KEY = 'sourdough_storage';
+
 const WHOLE_WHEAT = 'Whole wheat flour';
 const WATER = 'Water';
 const STARTER = 'Starter';
 const SALT = 'Salt';
-
-const calculateBakerRatio = (ingredients) => {
-  const { percent: totalPercent, gram: totalGram } = ingredients[TOTAL_FLOUR];
-
-  return Object.keys(ingredients).reduce((acc, key) => {
-    if (key === TOTAL_FLOUR) {
-      acc[TOTAL_FLOUR] = {
-        id: TOTAL_FLOUR,
-        percent: totalPercent,
-        gram: totalGram,
-      };
-
-      return acc;
-    }
-
-    let { percent, gram } = ingredients[key];
-    // percent = Number(((gram / totalGram) * totalPercent).toFixed(1));
-    gram = Number(((percent / totalPercent) * totalGram).toFixed(1));
-
-    acc[key] = {
-      id: key,
-      percent,
-      gram,
-    };
-
-    return acc;
-  }, {});
-};
-
-let DEFAULT_INGREDIENTS = {
+const DEFAULT_INGREDIENTS = {
   [TOTAL_FLOUR]: {
     id: TOTAL_FLOUR,
     percent: 100,
@@ -76,34 +47,55 @@ let DEFAULT_INGREDIENTS = {
   },
 };
 
-DEFAULT_INGREDIENTS = calculateBakerRatio(DEFAULT_INGREDIENTS);
-
 export default function App() {
-  const [totalFlour, setTotalFlour] = useState(
-    DEFAULT_INGREDIENTS[TOTAL_FLOUR],
-  );
-  const [wholeWheat, setWholeWheat] = useState(
-    DEFAULT_INGREDIENTS[WHOLE_WHEAT],
-  );
+  // useState
+  const [totalFlour, setTotalFlour] = useState(DEFAULT_INGREDIENTS[TOTAL_FLOUR]);
+  const [wholeWheat, setWholeWheat] = useState(DEFAULT_INGREDIENTS[WHOLE_WHEAT]);
   const [water, setWater] = useState(DEFAULT_INGREDIENTS[WATER]);
   const [starter, setStarter] = useState(DEFAULT_INGREDIENTS[STARTER]);
   const [salt, setSalt] = useState(DEFAULT_INGREDIENTS[SALT]);
 
+  useAppState({
+    onChange: (newAppState) => console.warn('App state changed to ', newAppState),
+    onForeground: () => {
+      console.warn('App went to Foreground');
+      AsyncStorage.getItem(STORAGE_KEY)
+        .then((jsonString) => {
+          ingredients = JSON.parse(jsonString);
+          console.warn('setting state from storage', ingredients);
+          setTotalFlour(ingredients[TOTAL_FLOUR]);
+          setWholeWheat(ingredients[WHOLE_WHEAT]);
+          setWater(ingredients[WATER]);
+          setStarter(ingredients[STARTER]);
+          setSalt(ingredients[SALT]);
+        })
+        .catch((e) => {
+          console.warn('could not retrieve data', e);
+        });
+    },
+    onBackground: () => {
+      console.warn('App went to background');
+      const data = JSON.stringify(getIngredients());
+      AsyncStorage.setItem(STORAGE_KEY, data);
+    },
+  });
+
+  const getIngredients = () => ({
+    [totalFlour.id]: totalFlour,
+    [wholeWheat.id]: wholeWheat,
+    [water.id]: water,
+    [starter.id]: starter,
+    [salt.id]: salt,
+  });
+
+  // onChange events
   const onChangeTotalFlour = (totalValueGram) => {
     if (!totalValueGram) {
       totalValueGram = 0;
     }
 
     setTotalFlour({ ...totalFlour, gram: totalValueGram });
-
-    const ingredients = {
-      [totalFlour.id]: totalFlour,
-      [wholeWheat.id]: wholeWheat,
-      [water.id]: water,
-      [starter.id]: starter,
-      [salt.id]: salt,
-    };
-    const bakerRatio = calculateBakerRatio(ingredients);
+    const bakerRatio = getBakerRatio(getIngredients());
 
     setWholeWheat(bakerRatio[wholeWheat.id]);
     setWater(bakerRatio[water.id]);
@@ -113,17 +105,15 @@ export default function App() {
 
   const onChangeIngredient = (value, type, ingredientId) => {
     value = Number(value.replace('%', ''));
-    console.log(value, type, ingredientId);
-    const { percent: totalPercent, gram: totalGram } = totalFlour;
 
     let updatedType;
     let updatedValue;
     if (type === 'percent') {
       updatedType = 'gram';
-      updatedValue = Number(((value / totalPercent) * totalGram).toFixed(1));
+      updatedValue = getGramFromPercent(value, totalFlour);
     } else if (type === 'gram') {
       updatedType = 'percent';
-      updatedValue = Number(((value / totalGram) * totalPercent).toFixed(1));
+      updatedValue = getPercentFromGram(value, totalFlour);
     }
 
     const updatedIngredient = {
@@ -132,7 +122,6 @@ export default function App() {
       [updatedType]: updatedValue,
     };
 
-    console.log(updatedIngredient);
     switch (ingredientId) {
       case WHOLE_WHEAT:
         setWholeWheat(updatedIngredient);

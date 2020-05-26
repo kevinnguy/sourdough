@@ -3,6 +3,7 @@
     "android": "react-native run-android",
     "build": "next build; next export",
     "deploy": "cp -R .now out/ && now out",
+    "device": "react-native run-ios --device",
     "ios": "react-native run-ios",
     "postinstall": "./bin/postinstall.sh",
     "test": "jest",
